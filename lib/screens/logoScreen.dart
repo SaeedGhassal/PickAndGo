@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:pick_and_go/components/rounded_button.dart';
 import 'signup.dart';
+import 'login.dart';
 
 class logoScreens extends StatefulWidget {
   static const String id = 'logo_screen';
@@ -68,7 +69,7 @@ class _logoScreensState extends State<logoScreens>
               title: 'Log In',
               colour: Colors.brown[500],
               onPressed: () {
-                // Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushNamed(context, login.id);
               },
             ),
             RoundedButton(

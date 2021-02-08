@@ -4,19 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'file:///C:/Users/Saeed/AndroidStudioProjects/pick_and_go/lib/components/constant.dart';
 
-class signup extends StatefulWidget {
-  static const String id = 'signup';
+class login extends StatefulWidget {
+  static const String id = 'login';
   @override
-  _signupState createState() => _signupState();
+  _loginState createState() => _loginState();
 }
 
-class _signupState extends State<signup> {
-  final _auth = FirebaseAuth.instance;
+class _loginState extends State<login> {
   bool showSpinner = false;
+  final _auth = FirebaseAuth.instance;
   String email;
   String password;
-  String name;
-  String plate;
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +41,6 @@ class _signupState extends State<signup> {
                 height: 48.0,
               ),
               TextField(
-                keyboardType: TextInputType.name,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  name = value;
-                },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your Name'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
-                  plate = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your Licence Plate'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
@@ -91,16 +65,16 @@ class _signupState extends State<signup> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: 'Register',
-                colour: Colors.brown[900],
+                title: 'Log In',
+                colour: Colors.brown,
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
                   try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
+                    final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
-                    if (newUser != null) {
+                    if (user != null) {
                       // Navigator
                     }
 

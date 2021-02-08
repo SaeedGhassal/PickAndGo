@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:pick_and_go/main.dart';
+import 'file:///C:/Users/Saeed/AndroidStudioProjects/pick_and_go/lib/screens/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

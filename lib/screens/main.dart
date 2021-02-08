@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/logoScreen.dart';
-import 'screens/signup.dart';
+import 'package:pick_and_go/screens/login.dart';
+import 'logoScreen.dart';
+import 'signup.dart';
 
 void main() {
   runApp(PickAndGo());
@@ -14,6 +15,7 @@ class PickAndGo extends StatelessWidget {
       routes: {
         logoScreens.id: (context) => logoScreens(),
         signup.id: (context) => signup(),
+        login.id: (context)=> login(),
       },
     );
   }
