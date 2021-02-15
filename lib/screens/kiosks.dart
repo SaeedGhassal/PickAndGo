@@ -7,7 +7,7 @@ final _firestore = Firestore.instance;
 
 class kiosks extends StatefulWidget {
   static const String id = 'kiosks';
-  static String selectedkiosk;
+  static String selectedkiosk = "";
 
   @override
   _kiosksState createState() => _kiosksState();
@@ -121,9 +121,12 @@ class MessageBubble extends StatelessWidget {
             child: RaisedButton(
               onPressed: () {
                 //nav to next page
+
                 //set state
-                Navigator.pushNamed(context, maps.id);
                 selectedkiosk = CafeName;
+
+                Navigator.pushNamed(context, maps.id);
+
                 print(selectedkiosk);
               },
               shape: RoundedRectangleBorder(

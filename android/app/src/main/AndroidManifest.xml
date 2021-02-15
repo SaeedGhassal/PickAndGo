@@ -10,7 +10,7 @@
         android:label="Pick&amp;Go"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC4C9S5fpFMjTR0n0sBCqXeneLhSdFGrpU"/>‏
+            android:value="AIzaSyDjJXenXNxTUV0uKeVCDN2e6y9D2EGfS-w"/>‏
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
