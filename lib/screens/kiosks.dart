@@ -125,7 +125,8 @@ class MessageBubble extends StatelessWidget {
                 //set state
                 selectedkiosk = CafeName;
 
-                Navigator.pushNamed(context, maps.id);
+                Navigator.pushNamed(context, maps.id,
+                    arguments: {'cafeName': selectedkiosk});
 
                 print(selectedkiosk);
               },
