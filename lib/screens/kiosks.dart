@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pick_and_go/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'maps.dart';
 
 final _firestore = Firestore.instance;
-String selectedkiosk;
 
 class kiosks extends StatefulWidget {
   static const String id = 'kiosks';
+  static String selectedkiosk;
+
   @override
   _kiosksState createState() => _kiosksState();
 }
 
 String messageText;
+String selectedkiosk;
 
 class _kiosksState extends State<kiosks> {
   int _currentIndex = 0;
@@ -119,6 +122,7 @@ class MessageBubble extends StatelessWidget {
               onPressed: () {
                 //nav to next page
                 //set state
+                Navigator.pushNamed(context, maps.id);
                 selectedkiosk = CafeName;
                 print(selectedkiosk);
               },
