@@ -4,6 +4,7 @@ import 'logoScreen.dart';
 import 'signup.dart';
 import 'kiosks.dart';
 import 'maps.dart';
+import 'selectOrders.dart';
 
 void main() {
   runApp(PickAndGo());
@@ -20,6 +21,7 @@ class PickAndGo extends StatelessWidget {
         login.id: (context) => login(),
         kiosks.id: (context) => kiosks(),
         maps.id: (context) => maps(),
+        selectOrders.id: (context) => selectOrders(),
       },
     );
   }

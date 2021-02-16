@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'kiosks.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'selectOrders.dart';
 
 final _firestore = Firestore.instance;
 
@@ -111,7 +112,14 @@ class _mapsState extends State<maps> {
                                       ),
                                       RaisedButton(
                                         onPressed: () {
-                                          Navigator.of(context).pop();
+                                          Navigator.pushReplacementNamed(
+                                              context, selectOrders.id,
+                                              arguments: {
+                                                'address': branch['name'] +
+                                                    ' Cafe at ' +
+                                                    branch['BranchName'] +
+                                                    ' Street',
+                                              });
                                         },
                                         color: Colors.green,
                                         child: Text(

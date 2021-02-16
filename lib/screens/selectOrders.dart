@@ -1,39 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:pick_and_go/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'maps.dart';
 
 final _firestore = Firestore.instance;
 
-class kiosks extends StatefulWidget {
-  static const String id = 'kiosks';
-  static String selectedkiosk = "";
-
+class selectOrders extends StatefulWidget {
+  static const String id = 'selectOrders';
   @override
-  _kiosksState createState() => _kiosksState();
+  _selectOrdersState createState() => _selectOrdersState();
 }
 
-String messageText;
-String selectedkiosk;
+Map dataname = {};
 
-class _kiosksState extends State<kiosks> {
+class _selectOrdersState extends State<selectOrders> {
   int _currentIndex = 0;
-  final messageTextController = TextEditingController();
-
+  @override
   Widget build(BuildContext context) {
+    dataname = ModalRoute.of(context).settings.arguments;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter tutorial"),
-        backgroundColor: Colors.brown,
-      ),
-      body: SafeArea(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            kioskStream(),
-          ],
+      body: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(dataname["address"].toString()),
+            backgroundColor: Colors.brown.shade400,
+            bottom: TabBar(
+              tabs: [
+                Tab(child: Text('Hot Drinks')),
+                Tab(text: 'Cold Drinks'),
+                Tab(text: 'Pastries'),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              kioskStream(),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -71,7 +76,11 @@ class kioskStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('cafes').snapshots(),
+      stream: _firestore
+          .collection("BarnOrders")
+          .document()
+          .collection("Hot Drinks")
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -80,17 +89,19 @@ class kioskStream extends StatelessWidget {
             ),
           );
         }
-        final cafees = snapshot.data.documents.reversed;
+        final cafees = snapshot.data.documents;
         List<MessageBubble> messageBubbles = [];
         for (var caafee in cafees) {
-          final CafeName1 = caafee.data['name'];
-          final noBranches1 = caafee.data['branches'];
-
+          final CafeName1 = caafee.data["name"];
+          final noBranches1 = caafee.data["price"];
+          print(CafeName1);
+          print(noBranches1);
           final Bubble = MessageBubble(
             noBranches: noBranches1,
             CafeName: CafeName1,
           );
-
+          print(CafeName1);
+          print(noBranches1);
           messageBubbles.add(Bubble);
         }
         return Expanded(
@@ -121,14 +132,8 @@ class MessageBubble extends StatelessWidget {
             child: RaisedButton(
               onPressed: () {
                 //nav to next page
-
-                //set state
-                selectedkiosk = CafeName;
-
-                Navigator.pushNamed(context, maps.id,
-                    arguments: {'cafeName': selectedkiosk});
-
-                print(selectedkiosk);
+                print(CafeName);
+                print(noBranches);
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
