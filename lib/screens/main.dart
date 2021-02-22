@@ -14,7 +14,7 @@ class PickAndGo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: kiosks.id,
+      initialRoute: selectOrders.id,
       routes: {
         logoScreens.id: (context) => logoScreens(),
         signup.id: (context) => signup(),

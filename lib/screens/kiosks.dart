@@ -7,7 +7,6 @@ final _firestore = Firestore.instance;
 
 class kiosks extends StatefulWidget {
   static const String id = 'kiosks';
-  static String selectedkiosk = "";
 
   @override
   _kiosksState createState() => _kiosksState();
@@ -29,8 +28,6 @@ class _kiosksState extends State<kiosks> {
       ),
       body: SafeArea(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             kioskStream(),
           ],

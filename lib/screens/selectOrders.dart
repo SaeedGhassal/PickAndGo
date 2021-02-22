@@ -22,7 +22,7 @@ class _selectOrdersState extends State<selectOrders> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(dataname["address"].toString()),
+            // title: Text(dataname["address"].toString()),
             backgroundColor: Colors.brown.shade400,
             bottom: TabBar(
               tabs: [
@@ -34,9 +34,21 @@ class _selectOrdersState extends State<selectOrders> {
           ),
           body: TabBarView(
             children: [
-              kioskStream(),
-              Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
+              Column(
+                children: <Widget>[
+                  kioskStream('Hot Drinks'),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  kioskStream('Cold Drinks'),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  kioskStream('Pastries'),
+                ],
+              ),
             ],
           ),
         ),
@@ -73,15 +85,17 @@ class _selectOrdersState extends State<selectOrders> {
 }
 
 class kioskStream extends StatelessWidget {
+  kioskStream(this.type);
+  final String type;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder(
       stream: _firestore
-          .collection("BarnOrders")
-          .document()
-          .collection("Hot Drinks")
+          .collection('BarnOrders')
+          .document('WADcdb3v134DEf0FcjM7')
+          .collection(this.type)
           .snapshots(),
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(
@@ -89,25 +103,22 @@ class kioskStream extends StatelessWidget {
             ),
           );
         }
-        final cafees = snapshot.data.documents;
-        List<MessageBubble> messageBubbles = [];
+        final cafees = snapshot.data.documents.reversed;
+        List<MessageBubble> orderBubble = [];
         for (var caafee in cafees) {
-          final CafeName1 = caafee.data["name"];
-          final noBranches1 = caafee.data["price"];
-          print(CafeName1);
-          print(noBranches1);
+          final orderName1 = caafee.data['name'];
+          final orderPrice1 = caafee.data['price'];
           final Bubble = MessageBubble(
-            noBranches: noBranches1,
-            CafeName: CafeName1,
+            orderPrice: orderPrice1,
+            orderName: orderName1,
           );
-          print(CafeName1);
-          print(noBranches1);
-          messageBubbles.add(Bubble);
+
+          orderBubble.add(Bubble);
         }
         return Expanded(
           child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: messageBubbles,
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+            children: orderBubble,
           ),
         );
       },
@@ -116,37 +127,100 @@ class kioskStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({this.noBranches, this.CafeName});
+  MessageBubble({this.orderPrice, this.orderName});
 
-  final String noBranches;
-  final String CafeName;
+  final int orderPrice;
+  final String orderName;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(8.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: RaisedButton(
               onPressed: () {
-                //nav to next page
-                print(CafeName);
-                print(noBranches);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9.0)),
+                        backgroundColor: Colors.white,
+                        child: Stack(
+                            overflow: Overflow.visible,
+                            alignment: Alignment.topCenter,
+                            children: [
+                              Container(
+                                height: 555,
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10, 490, 10, 10),
+                                  child: Column(
+                                    children: [
+                                      //buttons
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          RaisedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            color: Colors.redAccent,
+                                            child: Text(
+                                              'Back',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          RaisedButton(
+                                            onPressed: () {},
+                                            color: Colors.green,
+                                            child: Text(
+                                              'Continue',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              // Positioned(
+                              //   top: -60,
+                              //   child: CircleAvatar(
+                              //     backgroundColor: Colors.white70,
+                              //     radius: 60,
+                              //     child: ClipRRect(
+                              //       borderRadius: BorderRadius.circular(50),
+                              //     ),
+                              //   ),
+                              // ),
+                            ]),
+                      );
+                    });
               },
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(10)),
               disabledColor: Colors.brown[50],
+              color: Colors.white10,
               child: Row(
                 children: <Widget>[
                   Container(
                     // img
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(11.0),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.asset('images/$CafeName.jpeg'),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset('images/$orderName.jpeg'),
                       ),
                     ),
 
@@ -155,24 +229,16 @@ class MessageBubble extends StatelessWidget {
                   ),
                   Text(
                     // cafe name
-                    CafeName,
+                    '$orderName' + '\n$orderPrice',
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                      letterSpacing: 1.45,
+                      letterSpacing: 1.35,
                       color: Colors.black,
-                      fontSize: 25.0,
+                      fontSize: 22.0,
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          Text(
-            // branches
-            ' Available Branches: $noBranches',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Colors.black54,
             ),
           ),
         ],
