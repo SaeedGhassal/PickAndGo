@@ -10,6 +10,7 @@ import 'selectOrders.dart';
 final _firestore = Firestore.instance;
 
 class maps extends StatefulWidget {
+  // naming this current page to easily route
   static const String id = 'maps';
 
   @override

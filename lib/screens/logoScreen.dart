@@ -5,6 +5,7 @@ import 'signup.dart';
 import 'login.dart';
 
 class logoScreens extends StatefulWidget {
+  // naming this current page to easily route
   static const String id = 'logo_screen';
   @override
   _logoScreensState createState() => _logoScreensState();
@@ -12,6 +13,7 @@ class logoScreens extends StatefulWidget {
 
 class _logoScreensState extends State<logoScreens>
     with SingleTickerProviderStateMixin {
+  // declare public variables
   AnimationController controller;
   Animation animation;
   @override
@@ -47,18 +49,23 @@ class _logoScreensState extends State<logoScreens>
             Column(
               children: <Widget>[
                 Hero(
+                  //hero widget so they can transfer the logo to the next page
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
                     height: 250.0,
                   ),
                 ),
-                TypewriterAnimatedTextKit(
-                  text: ['Pick & Go'],
+                TyperAnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  //TypewriterAnimatedTextKit to show the app name in a fancy way
+
                   textStyle: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
                   ),
+                  text: ['Pick & Go', 'Pick & Go', 'Pick & Go', 'Pick & Go'],
+                  // the text duplicated 4 times then stops the animation
                 ),
               ],
             ),
@@ -69,6 +76,7 @@ class _logoScreensState extends State<logoScreens>
               title: 'Log In',
               colour: Colors.brown[500],
               onPressed: () {
+                //navigate to login page
                 Navigator.pushNamed(context, login.id);
               },
             ),
@@ -76,6 +84,7 @@ class _logoScreensState extends State<logoScreens>
               title: 'Register',
               colour: Colors.brown[700],
               onPressed: () {
+                //navigate to signup page
                 Navigator.pushNamed(context, signup.id);
               },
             ),

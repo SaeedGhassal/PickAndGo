@@ -14,7 +14,10 @@ class PickAndGo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: selectOrders.id,
+      // initializing the first page to occur
+      initialRoute: logoScreens.id,
+
+      // naming the routes to navigate the screens easily
       routes: {
         logoScreens.id: (context) => logoScreens(),
         signup.id: (context) => signup(),

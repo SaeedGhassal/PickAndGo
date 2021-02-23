@@ -6,19 +6,20 @@ import 'maps.dart';
 final _firestore = Firestore.instance;
 
 class kiosks extends StatefulWidget {
+  // naming this current page to easily route
   static const String id = 'kiosks';
 
   @override
   _kiosksState createState() => _kiosksState();
 }
 
+// declare public variables
+int _currentIndex = 0;
+final messageTextController = TextEditingController();
 String messageText;
 String selectedkiosk;
 
 class _kiosksState extends State<kiosks> {
-  int _currentIndex = 0;
-  final messageTextController = TextEditingController();
-
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -124,8 +125,6 @@ class MessageBubble extends StatelessWidget {
 
                 Navigator.pushNamed(context, maps.id,
                     arguments: {'cafeName': selectedkiosk});
-
-                print(selectedkiosk);
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
